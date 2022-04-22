@@ -1,11 +1,8 @@
 package auxillary;
 
-
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
-
 
 /**
  * Метод для ввода данных при добавлении элемента в коллекцию

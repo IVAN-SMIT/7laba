@@ -4,13 +4,19 @@ import City.*;
 import auxiliary.*;
 import auxiliary.Messager;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.Stack;
 import java.util.UUID;
 
+/**
+ * Добавляет новый элемент в базу данных
+ */
 
 public class AddCommand implements Command {
-    public  String run(String argument, Stack<City> cityCollection) throws Exception {
+    public  String run(String argument, Stack<City> cityCollection, String username, Connection database) throws Exception {
 
         if (argument == null) {
             throw new IllegalArgumentException("add не имеет аргументов!");
@@ -20,6 +26,10 @@ public class AddCommand implements Command {
         System.out.println(argument);
 
         try {
+
+            Statement st = database.createStatement(); //простой SQL-запрос без параметров
+            ResultSet rs = st.executeQuery("SELECT ");
+
             int index = cityCollection.size();
 
             Long id;
@@ -43,7 +53,7 @@ public class AddCommand implements Command {
             cityCollection.insertElementAt(new City(id, name.trim(), coordinates,
                     localDate.toString(),
                     area, population, metersAboveSeaLevel,
-                    carCode, climate, standardOfLiving, governor), index);
+                    carCode, climate, standardOfLiving, governor, username), index);
 
             System.out.println("добавлен элемент  " + cityCollection.peek().toString());
 

@@ -4,6 +4,9 @@ import java.io.*;
 import java.nio.channels.*;
 import java.net.*;
 
+/**
+ * я короче все что связано с подключением к серверу в один класс засунул
+ */
 
 public class connectionManager {
     public static SocketChannel client;

@@ -51,7 +51,6 @@ public class Commander {
         }
        
 
-
         System.out.println("Распознана команда: "+command+"\nargument команды: " + argument+ "\n");
         switch (command) {
             case"help": response = new HelpCommand().run();break;
@@ -61,8 +60,7 @@ public class Commander {
             case "history": response = new HistoryCommand().run(argument, history);break;
             case "show": response = new ShowCommand().run(argument, cityCollection);break;
             case "clear": response = new  ClearCommand().run(argument, cityCollection);break;
-            case "add":  response = new AddCommand().run(argument, cityCollection);break;
-            //case "save":  response = new SaveCommand().run(argument, cityCollection);break;
+           // case "add":  response = new AddCommand().run(argument, cityCollection);break;
             case "remove_by_id":response =  new Remove_by_idCommand().run(argument, cityCollection);break;
             case "remove_last": response = new Remove_lastCommand().run(cityCollection);break;
             case "update": {response =  new UpdateCommand().run(argument, cityCollection);break;}

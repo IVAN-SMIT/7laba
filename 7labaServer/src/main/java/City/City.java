@@ -25,6 +25,8 @@ public class City {
     private StandardOfLiving standardOfLiving; //Поле не может быть null
     private Human governor; //Поле не может быть null
 
+    String username;
+
 
     public City(){super();}
     Messager city = new Messager();
@@ -35,7 +37,7 @@ public class City {
                 int area,
                 Long population, Long metersAboveSeaLevel,
                 long carCode, Climate climate,
-                StandardOfLiving standardOfLiving,Human governor) throws Exception {
+                StandardOfLiving standardOfLiving,Human governor, String username) throws Exception {
 
         setId(id);
         setName(name);
@@ -48,6 +50,7 @@ public class City {
         setClimate(climate);
         setStandardOfLiving(standardOfLiving);
         setGovernor(governor);
+        setUsername(username);
     }
 
     public City(Long id, String name, Coordinates coordinates,
@@ -88,6 +91,8 @@ public class City {
     public Climate getClimate(){return climate;}
     public StandardOfLiving getStandardOfLiving(){return standardOfLiving;}
     public Human getGovernor(){return governor;}
+
+    public String getUsername(){return username;}
 
 
     /*--------------------------------------------------------------------*/
@@ -169,6 +174,12 @@ public class City {
         this.governor = governor;
     }
 
+
+    public void setUsername(String username) throws Exception{
+        if(username == null){throw new IllegalArgumentException("username не может быть null");}
+        this.username = username;
+    }
+
     /*--------------------------------------------------------------------*/
 
     @Override
@@ -178,7 +189,7 @@ public class City {
                 localDate.toString() +
                 " | area:" + area + " | population:" +
                 population + " | meters above sea level:" + metersAboveSeaLevel + " | car code:" +carCode+ " | climate:"
-                + climate.toString()+ " | standard of living:" +standardOfLiving.toString()+ " | Human{height:"+governor.toString() + "}";
+                + climate.toString()+ " | standard of living:" +standardOfLiving.toString()+ " | Human{height:"+governor.toString() + "}" + " by " + username;
     }
 
 }
