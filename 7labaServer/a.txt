@@ -1,0 +1,4 @@
+show
+info
+history
+shuffle
