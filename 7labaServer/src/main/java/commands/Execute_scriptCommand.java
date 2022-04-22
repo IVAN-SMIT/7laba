@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -26,7 +27,7 @@ public class Execute_scriptCommand implements Command {
      *
      */
 
-    public String run(String file, Stack<City> cityCollection) throws Exception {
+    public String run(String file, Stack<City> cityCollection, String username, String password, Connection myDatabase) throws Exception {
 
         ArrayList<String> commands = new ArrayList<String>();
 
@@ -52,7 +53,7 @@ public class Execute_scriptCommand implements Command {
                 throw new IllegalArgumentException("Ошибка зацикливания!");
             }
             Commander.scriptCommand = command;
-            Commander.readCommand(cityCollection);
+            Commander.readCommand(cityCollection, username, password, myDatabase);
             result =  result + "\n\n"+ Commander.response;
         }
 

@@ -14,7 +14,7 @@ import java.util.Stack;
  */
 
 public class UpdateCommand implements Command {
-    public String run(String argument, Stack<City> cityCollection) throws Exception {
+    public String run(String argument, Stack<City> cityCollection, String username) throws Exception {
         Iterator<City> iterator = cityCollection.iterator();
 
         String[] fields =argument.split(", ");
@@ -48,7 +48,7 @@ public class UpdateCommand implements Command {
             cityCollection.insertElementAt(new City(id, name.trim(), coordinates,
                     localDate.toString(),
                     area, population, metersAboveSeaLevel,
-                    carCode, climate, standardOfLiving, governor), index);
+                    carCode, climate, standardOfLiving, governor, username), index);
 
             System.out.println("обновлен элемент:  " + cityCollection.peek().toString());
 

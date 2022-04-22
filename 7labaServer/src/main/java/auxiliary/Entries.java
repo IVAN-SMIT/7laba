@@ -14,7 +14,7 @@ import java.util.Stack;
 
 public class Entries {
 
-    public Stack<City> getData(long id,int index, Stack<City> cityCollection,String[] fields, boolean flag) throws Exception {
+    public Stack<City> getData(long id,int index, Stack<City> cityCollection,String[] fields, String username, boolean flag) throws Exception {
 
         Messager p = new Messager();
         BufferedReader n = new BufferedReader(new InputStreamReader(System.in));
@@ -56,7 +56,7 @@ public class Entries {
         cityCollection.insertElementAt(new City(id, name.trim(), coordinates,
                 localDate.toString(),
                 area, population, metersAboveSeaLevel,
-                carCode, climate, standardOfLiving, governor), index);
+                carCode, climate, standardOfLiving, governor, username), index);
 
         return cityCollection;
     }

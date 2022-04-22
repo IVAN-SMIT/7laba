@@ -5,6 +5,7 @@ import commands.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Objects;
@@ -31,7 +32,7 @@ public class Commander {
     public static String scriptCommand;
 
     
-    public static Stack<City> readCommand(Stack<City> cityCollection) throws Exception {
+    public static Stack<City> readCommand(Stack<City> cityCollection, String username, String password, Connection myDatabase) throws Exception {
 
         String argument = null;
         if (scriptCommand != null){
@@ -49,10 +50,17 @@ public class Commander {
         if (!Objects.equals(command, "insert_at_help")){
             history.add(command);
         }
+
+        String registr = registration.run(null, username, password, myDatabase);
+        if (registr.equals("WRONG_PASS")) {
+            response = "WRONG_PASS";
+            return null;
+        }
        
 
-        System.out.println("Распознана команда: "+command+"\nargument команды: " + argument+ "\n");
+        System.out.println("Распознана команда: "+command+"\nargument команды: " + argument+ "\nимя пользователя: "+ username + "\nпароль: " + password +"\n");
         switch (command) {
+            case "registration": response = registr;
             case"help": response = new HelpCommand().run();break;
             case "exit":  new SaveCommand().run();break;
             case "info":response = new InfoCommand().run(argument, cityCollection);break;
@@ -60,16 +68,16 @@ public class Commander {
             case "history": response = new HistoryCommand().run(argument, history);break;
             case "show": response = new ShowCommand().run(argument, cityCollection);break;
             case "clear": response = new  ClearCommand().run(argument, cityCollection);break;
-           // case "add":  response = new AddCommand().run(argument, cityCollection);break;
+            case "add":  response = new AddCommand().run(argument, cityCollection, username, myDatabase);break;
             case "remove_by_id":response =  new Remove_by_idCommand().run(argument, cityCollection);break;
             case "remove_last": response = new Remove_lastCommand().run(cityCollection);break;
-            case "update": {response =  new UpdateCommand().run(argument, cityCollection);break;}
-            case "execute_script" : response = new Execute_scriptCommand().run(argument, cityCollection);break;
+           // case "update": {response =  new UpdateCommand().run(argument, cityCollection);break;}
+            case "execute_script" : response = new Execute_scriptCommand().run(argument,cityCollection, username, password, myDatabase);break;
             case "remove_any_by_climate" :response= new Remove_any_by_climateCommand().run(argument, cityCollection);break;
             case "filter_greater_than_car_code" :response =  new Filter_greater_than_car_codeCommand().run(argument, cityCollection);break;
             case "insert_at_help" :{response= "Введите значение индкса.Максимально возможное значение: " + (cityCollection.size()+1);break;}
             case "shuffle" : response = new ShuffleCommand().run(cityCollection);break;
-            case "insert_at" : response = new Insert_atCommand().run(argument, cityCollection);break;
+          //  case "insert_at" : response = new Insert_atCommand().run(argument, cityCollection);break;
             default: response ="Неопознанная команда. Введите 'help' для просмотра доступных команд";
         }
         return cityCollection;

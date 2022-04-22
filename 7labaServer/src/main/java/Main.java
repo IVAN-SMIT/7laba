@@ -2,6 +2,7 @@ import City.City;
 import auxiliary.Commander;
 import auxiliary.IdChecker;
 import connection.ServerManager;
+import database.databaseManager;
 import fileManager.FileManager;
 
 import java.sql.Connection;
@@ -21,13 +22,12 @@ public class Main {
             System.out.println("Пожалуйста, запускайте только с именем файла коллекции!");
         }
 
-
          String driverClassName = "org.postgresql.Driver";
          String DB_URL = "jdbc:postgresql://tai.db.elephantsql.com:5432/umokrpbh";
          String USER = "umokrpbh";
          String PASS = "HXZqmwY3rbFjh-ZoOdo8yXCkOkDPWkUQ";
 
-        Connection con = null;
+        Connection myDatabase = null;
 
         try{
             Class.forName(driverClassName);
@@ -38,22 +38,20 @@ public class Main {
         }
 
         try {
-           con = DriverManager.getConnection(DB_URL, USER, PASS);
+            myDatabase = DriverManager.getConnection(DB_URL, USER, PASS);
         }catch (SQLException e){
             System.out.println("Не удалось подключиться к БД");
         }
 
-        if (con != null) {
-            System.out.println("Соединение с БД выполнено успешно");
+        if (myDatabase != null) {
+            System.out.println("Соединение с БД выполнено успешно\n" + myDatabase);
         } else {
             System.out.println("Ошибка при подключении к БД");
         }
 
-
-
-        Stack<City> cityCollection = new FileManager().loadCollection(args[0]);
-        Commander.setCollection(cityCollection);
+        Stack<City> cityCollection = database.databaseManager.loadCollection(myDatabase);
         System.out.println("Коллекция загружена");
+
 
         while (true) {
 
@@ -61,7 +59,7 @@ public class Main {
             IdChecker.check(cityCollection);
             try {
                 ServerManager server = new ServerManager(9890);
-                server.starting(cityCollection);
+                server.starting(cityCollection, myDatabase);
             }catch (Exception e){
                 System.out.println(e +"\n =======================");break;
             }

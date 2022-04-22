@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.*;
 import java.nio.channels.*;
 import java.net.*;
+import java.sql.Connection;
 import java.util.Iterator;
 
 import City.*;
@@ -34,7 +35,7 @@ public class ServerManager {
         channel.register(selector, SelectionKey.OP_ACCEPT);
     }
 
-    public void starting(Stack<City> cityCollection) {
+    public void starting(Stack<City> cityCollection, Connection myDatabase) {
         try {
             System.out.printf("Сервер запущен в порте %d\n\n", port);
 
@@ -63,7 +64,7 @@ public class ServerManager {
                         if (key.isAcceptable())
                             handleAccept(key);
                         if (key.isReadable())
-                           cityCollection = handleRead(key, cityCollection);
+                            cityCollection = handleRead(key, cityCollection, myDatabase);
 
                         iter.remove();
                     }
@@ -85,7 +86,7 @@ public class ServerManager {
         System.out.printf("Установлено соединение с пользователем: %s\n", address);
     }
 
-    public Stack<City> handleRead(SelectionKey key, Stack<City> cityCollection) throws IOException {
+    public Stack<City> handleRead(SelectionKey key, Stack<City> cityCollection, Connection myDatabase) throws IOException {
         SocketChannel ch = (SocketChannel) key.channel();
         ByteArrayOutputStream sb = new ByteArrayOutputStream();
 
@@ -122,12 +123,15 @@ public class ServerManager {
                 if (obj instanceof Request) {
                     Request req = (Request) obj;
                     Commander.command = req.getCommand();
-                    Commander.readCommand(cityCollection);
+
+                    cityCollection = new Commander().readCommand(cityCollection, req.getUsername(), req.getPassword(), myDatabase);;
+                    //Commander.readCommand(cityCollection);
                     response = new Response(new Commander().response);
                 } else
                     System.out.println("Сообщение повреждено");
             } catch (Exception e) {
-                e.printStackTrace();
+               e.printStackTrace();
+                System.out.println(e);
             }
             sb.reset();
             ObjectOutput objectOutput = new ObjectOutputStream(sb);
@@ -138,6 +142,7 @@ public class ServerManager {
 
         return cityCollection;
     }
+
 
 
 

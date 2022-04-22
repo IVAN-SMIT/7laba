@@ -19,7 +19,7 @@ import java.util.UUID;
 
 
 public class Insert_atCommand implements Command {
-    public String run(String argument, Stack<City> cityCollection) throws Exception {
+    public String run(String argument, Stack<City> cityCollection, String username) throws Exception {
         int index;
         Messager insert = new Messager();
 
@@ -51,7 +51,7 @@ public class Insert_atCommand implements Command {
                     cityCollection.insertElementAt(new City(id, name.trim(), coordinates,
                             localDate.toString(),
                             area, population, metersAboveSeaLevel,
-                            carCode, climate, standardOfLiving, governor), index);
+                            carCode, climate, standardOfLiving, governor, username), index);
 
                     insert.println("Добавлен элемент " + cityCollection.peek().toString() +"\nв позицию "+index, true);
                 }

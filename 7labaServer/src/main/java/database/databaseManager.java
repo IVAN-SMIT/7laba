@@ -41,9 +41,9 @@ public class databaseManager {
                     cityCollection.add(new City(id, name.trim(), coordinates,
                             localDate.toString(),
                             area, population, metersAboveSeaLevel,
-                            carCode, climate, standardOfLiving, governor));
+                            carCode, climate, standardOfLiving, governor, username));
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Поврежденный файл! Некоторые города имеют неправильные значения, поэтому они были пропущены");
+                    System.out.println("Поврежденный файл! Некоторые элементы типа City имеют неправильные значения, поэтому они были пропущены");
                 }
             }
             rs.close();
@@ -64,9 +64,15 @@ public class databaseManager {
                 String[] fields = iterator.next().toString().split(",");
                 try {
                     st.executeUpdate(
-                            "INSERT INTO collection(id, name, coordinates,localDate,area, population, metersAboveSeaLevel,\n" +
-                                    "                    carCode, climate, standardOfLiving, governor, username)" +
-                                    " VALUES(" + fields[0] + ", '" + fields[1] + "', '" + fields[2] + "', '" + fields[3] + "', '" + fields[4] + "', '" + fields[5] + "', '" + fields[6] + "', '" + fields[7] + "', '" + fields[8] + "', '" + fields[9] + "')");
+                            "INSERT INTO collection(id, name, coordinates,localDate," +
+                                    "                    area, population, metersAboveSeaLevel,\n" +
+                                    "                      carCode, climate, standardOfLiving, governor, username)" +
+                                    " VALUES(" + fields[0] + ", '" + fields[1] +
+                                    "', '" + fields[2] + "', '" + fields[3] +
+                                    "', '" + fields[4] + "', '" + fields[5] +
+                                    "', '" + fields[6] + "', '" + fields[7] +
+                                    "', '" + fields[8] + "', '" + fields[9] +
+                                    "', '" + fields[10]+ "', '" + fields[11] + "')");
 
                 } catch (SQLException e) {
                     e.printStackTrace();

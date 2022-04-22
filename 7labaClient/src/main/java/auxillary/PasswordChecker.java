@@ -14,7 +14,7 @@ public class PasswordChecker {
     public String toSHA256(String password) throws NoSuchAlgorithmException {
 
        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
-       final byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+       final byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_16));
        final StringBuilder hexString = new StringBuilder();
         for (int i = 0; i < hash.length; i++) {
             final String hex = Integer.toHexString(0xff & hash[i]);
