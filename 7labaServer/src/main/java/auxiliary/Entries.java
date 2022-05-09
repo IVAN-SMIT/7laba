@@ -8,18 +8,18 @@ import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.Stack;
 
-/**
- * Метод для ввода данных при добавлении элемента в коллекцию
- */
+
 
 public class Entries {
+
+    /**
+     * Метод для ввода данных при добавлении элемента в коллекцию
+     */
 
     public Stack<City> getData(long id,int index, Stack<City> cityCollection,String[] fields, String username, boolean flag) throws Exception {
 
         Messager p = new Messager();
         BufferedReader n = new BufferedReader(new InputStreamReader(System.in));
-
-
 
         p.println("Name: ", flag);
         String name = fields[0];

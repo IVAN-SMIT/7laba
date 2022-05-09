@@ -18,6 +18,8 @@ class Main {
         String passwordFin = null;
 
         String result = "WRONG_PASS";
+
+
         try {
             while (result.equals("WRONG_PASS")) {
                 System.out.println("Username: ");
@@ -28,7 +30,7 @@ class Main {
                 assert client != null;
                 System.out.println(username + "\n"+passwordFin);
                 result = client.sendMessage(new Request("registration", username, passwordFin)).gettextResponse();
-                System.out.println(result);
+                System.out.println("Подключаемся к серверу...");
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -48,9 +50,9 @@ class Main {
                 String command = n.readLine();
                 checker.check(command);
                 if (command.equals("insert_at")){
-                    // client.sendMessage(new Request("insert_at_help"));
+                    client.sendMessage(new Request("insert_at_help", username, passwordFin));
                     String index = "insert_at " + n.readLine();
-                    CommandChecker.commandFin = new Entries().getData(index + ",");
+                    CommandChecker.commandFin = new Entries().getData(index + "; ");
                     if (!CommandChecker.commandFin.equals("err")) {
                         System.out.println("Ваша коллекция:\n" + CommandChecker.commandFin +
                                 "\nВерно?\n \"1\"-да, все верно\n \"2\"-нет, ввести заново");

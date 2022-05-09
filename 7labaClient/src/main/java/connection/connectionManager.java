@@ -51,7 +51,7 @@ public class connectionManager {
                     response = (Response) obj;
                 System.out.println(response.gettextResponse());
             } catch (Exception e) {
-                System.out.println("Произошла ошибка.");
+                System.out.println("Произошла ошибка приема с сервера.");
             }
 
         } catch (IOException e) {
@@ -60,7 +60,7 @@ public class connectionManager {
             try {
                 client.close();
             } catch (IOException ex) {
-                System.out.println("Cannot close connection.");
+                System.out.println("Не удается закрыть соединение.");
             }
         }
 

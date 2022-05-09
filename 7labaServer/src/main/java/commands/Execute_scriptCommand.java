@@ -22,9 +22,8 @@ import java.util.Stack;
 public class Execute_scriptCommand implements Command {
 
     /**
-     *Метод для чтения файлов, в которых могут быть записаны команды
+     * Метод для чтения файлов, в которых могут быть записаны команды
      * @param file - имя файла
-     *
      */
 
     public String run(String file, Stack<City> cityCollection, String username, String password, Connection myDatabase) throws Exception {

@@ -26,8 +26,22 @@ public class City {
     private Human governor; //Поле не может быть null
 
     String username;
-
-
+/*
+   CREATE TABLE collection (
+   id serial PRIMARY KEY,
+   name VARCHAR (50) NOT NULL,
+   xy VARCHAR (50) NOT NULL,
+   creationDate VARCHAR (50) NOT NULL,
+   area VARCHAR (50) NOT NULL,
+   population VARCHAR (50) NOT NULL,
+   metersAboveSeaLevel VARCHAR (50) NOT NULL,
+   carCode VARCHAR (50) NOT NULL,
+   climate VARCHAR (50) NOT NULL,
+   standardOfLiving VARCHAR (50) NOT NULL,
+   governor VARCHAR (50) NOT NULL,
+   username VARCHAR (100) NOT NULL
+ );
+*/
     public City(){super();}
     Messager city = new Messager();
     boolean flag = true;

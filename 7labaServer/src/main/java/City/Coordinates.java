@@ -5,9 +5,9 @@ package City;
  */
 
 public class Coordinates {
+
     private int x; //Максимальное значение поля: 714
     private int y; //Значение поля должно быть больше -493
-
 
     public Coordinates(int x, int y) throws IllegalArgumentException {
         setX(x);

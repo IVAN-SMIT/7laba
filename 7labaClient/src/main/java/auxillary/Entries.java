@@ -22,7 +22,7 @@ public class Entries {
 
             p.println("(int)Coordinates [x y]: ", flag);
             String xy = n.readLine().trim();
-            // coordinates = new Coordinates(Integer.parseInt(xy[0]), Integer.parseInt(xy[1]));
+            //coordinates = new Coordinates(Integer.parseInt(xy[0]), Integer.parseInt(xy[1]));
 
             LocalDateTime localDate = LocalDateTime.now();
 

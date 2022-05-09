@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 /**
  * Удаляет из коллекции один элемент, значение поля climate которого эквивалентно заданному (задается вручную)
+ * с использованием STREAM API
  */
 
 public class Remove_any_by_climateCommand implements Command {

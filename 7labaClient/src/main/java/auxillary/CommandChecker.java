@@ -48,21 +48,7 @@ public class CommandChecker {
                 if (command.trim().equals("update")) {
                     System.out.println("Введите id элемента: ");
                     String idUpdate = n.readLine();
-                    commandFin = new Entries().getData("update " + idUpdate + ",");
-                    if (!commandFin.equals("err")) {
-                        System.out.println("Ваша коллекция:\n" + commandFin +
-                                "\nВерно?\n \"1\"-да, все верно\n \"2\"-нет, ввести заново");
-                        boolean flag = true;
-                        Corrector.enter(flag);
-                    }
-                }
-/*
-                if (command.trim().equals("insert_at")) {
-
-                    System.out.println("Введите индекс позиции элемента:");
-                    String index = "insert_at " + n.readLine();
-                    commandFin = new Entries().getData(index + ",");
-                    //commandFin = "insert_at 4, f, 5 6, 2022-03-26T06:43:00.413, 56, 56, 56, 56, OCEANIC, HIGH, 6.0"; //ТЕСТЫ
+                    commandFin = new Entries().getData("update " + idUpdate + ";");
                     if (!commandFin.equals("err")) {
                         System.out.println("Ваша коллекция:\n" + commandFin +
                                 "\nВерно?\n \"1\"-да, все верно\n \"2\"-нет, ввести заново");
@@ -71,7 +57,6 @@ public class CommandChecker {
                     }
                 }
 
- */
         } catch (
                 Exception e) {
             e.printStackTrace();

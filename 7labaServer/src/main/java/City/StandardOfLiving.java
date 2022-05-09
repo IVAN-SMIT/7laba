@@ -5,6 +5,7 @@ package City;
  */
 
 public enum StandardOfLiving {
+
     VERY_HIGH("VERY_HIGH"),
     HIGH("HIGH"),
     NIGHTMARE("NIGHTMARE");
@@ -18,7 +19,6 @@ public enum StandardOfLiving {
     public void setLevel(String level) {
         this.level = level;
     }
-
     public String getLevel() {
         return level;
     }

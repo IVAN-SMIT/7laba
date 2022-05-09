@@ -3,7 +3,7 @@ package connection;
 import java.io.Serializable;
 
 /**
- * запрос
+ * запрос на сервер
  */
 
 public class Request implements Serializable {

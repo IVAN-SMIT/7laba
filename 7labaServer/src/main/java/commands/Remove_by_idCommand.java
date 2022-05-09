@@ -14,26 +14,14 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
- * удаляет элемент из коллекции по его id
+ * удаляет элемент из коллекции по его id, с использованием STREAM API
  */
 
 public class Remove_by_idCommand implements Command {
 
     public String run(String argument, Stack<City> cityCollection) throws Exception {
 
-
-
         try {
-
-         /*
-            while (iterator.hasNext()) {
-                City element = iterator.next();
-                if (element.getId().equals(numId)) {
-                    iterator.remove();
-                    return "Элемент:\n" + element.toString() +"\nCо значением id:" + numId + " был удалён.\nНе забывайте про 'save' чтобы сохранить изменения.";
-                }
-            }
-         */
 
             Long numId = Long.valueOf(argument);
             Stack<City> res = cityCollection.stream().filter((p) -> p.getId().equals(numId)).collect(Collectors.toCollection(Stack::new));

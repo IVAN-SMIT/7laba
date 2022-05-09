@@ -2,7 +2,6 @@ package commands;
 
 import City.*;
 import auxiliary.*;
-import auxiliary.Messager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,31 +9,43 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.Stack;
 import java.util.UUID;
+import java.util.PriorityQueue;
+import java.util.Iterator;
+import java.sql.Connection;
+import database.*;
+import java.sql.Statement;
+import java.sql.SQLException;
 
 /**
  * Добавляет новый элемент в базу данных
+ * id генерируется уникальным алгоритмом
  */
 
 public class AddCommand implements Command {
-    public  String run(String argument, Stack<City> cityCollection, String username, Connection database) throws Exception {
+    public  Stack<City> run(String argument, Stack<City> cityCollection, String username, Connection database) throws Exception {
 
         if (argument == null) {
             throw new IllegalArgumentException("add не имеет аргументов!");
         }
 
-        String fields[] =argument.split(", ");
-        System.out.println(argument);
+        String[] fields =argument.split(", ");
+
+        long id;
+        UUID myId = UUID.randomUUID();
+        id = (long) Math.floor(Math.abs(myId.hashCode()/100000));
 
         try {
 
-            Statement st = database.createStatement(); //простой SQL-запрос без параметров
-            ResultSet rs = st.executeQuery("SELECT ");
-
             int index = cityCollection.size();
 
-            Long id;
-            UUID myId = UUID.randomUUID();
-            id = (long) Math.floor(Math.abs(myId.hashCode()/100000));
+            //Statement st = database.createStatement(); //простой SQL-запрос без параметров
+           // ResultSet rs = st.executeQuery("SELECT last_value FROM cityCollection_id_seq");
+
+
+            //id = Long.parseLong(rs.getString(1));
+
+            //rs.close();
+           // st.close();
 
             String name = fields[0];
             String[] xy = fields[1].split(" ");
@@ -55,15 +66,19 @@ public class AddCommand implements Command {
                     area, population, metersAboveSeaLevel,
                     carCode, climate, standardOfLiving, governor, username), index);
 
-            System.out.println("добавлен элемент  " + cityCollection.peek().toString());
+            fields[10] = Long.toString(id);
+            fields[11] =username;
 
+            System.out.println(username +" добавил элемент  " + cityCollection.peek().toString());
 
         }catch (Exception e) {
             //e.printStackTrace();
-            return ("Введены неверные данные! Попробуйте снова. (начните с add)  \n" + e);
-
+            Commander.response = ("Введены неверные данные! Попробуйте снова. (начните с add)  \n" + e);
         }
-        return "Элемент успешно добавлен!";
+
+        DatabaseManager.saveCollection(cityCollection, database,fields, id, username);
+        Commander.response = "Элемент успешно добавлен!";
+        return cityCollection;
     }
 
 

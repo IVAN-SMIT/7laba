@@ -5,6 +5,7 @@ package City;
     */
 
 public enum Climate {
+
     MONSOON("MONSOON"),
     OCEANIC("OCEANIC"),
     MEDITERRANIAN("MEDITERRANIAN"),

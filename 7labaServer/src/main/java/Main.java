@@ -1,18 +1,13 @@
 import City.City;
-import auxiliary.Commander;
 import auxiliary.IdChecker;
 import connection.ServerManager;
-import database.databaseManager;
-import fileManager.FileManager;
+import database.ConnectToDB;
+import database.DatabaseManager;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Stack;
 
 // вариант 665580
-
 
 public class Main {
 
@@ -21,37 +16,14 @@ public class Main {
         if (args.length != 1) {
             System.out.println("Пожалуйста, запускайте только с именем файла коллекции!");
         }
-
-         String driverClassName = "org.postgresql.Driver";
-         String DB_URL = "jdbc:postgresql://tai.db.elephantsql.com:5432/umokrpbh";
-         String USER = "umokrpbh";
-         String PASS = "HXZqmwY3rbFjh-ZoOdo8yXCkOkDPWkUQ";
-
         Connection myDatabase = null;
 
-        try{
-            Class.forName(driverClassName);
-
-        }catch (ClassNotFoundException cl){
-            System.out.println(cl);
-            System.out.println("класс драйвера не найден");
-        }
 
         try {
-            myDatabase = DriverManager.getConnection(DB_URL, USER, PASS);
-        }catch (SQLException e){
-            System.out.println("Не удалось подключиться к БД");
-        }
+            myDatabase = new ConnectToDB().connect(myDatabase);
+            Stack<City> cityCollection = DatabaseManager.loadCollection(myDatabase);
 
-        if (myDatabase != null) {
-            System.out.println("Соединение с БД выполнено успешно\n" + myDatabase);
-        } else {
-            System.out.println("Ошибка при подключении к БД");
-        }
-
-        Stack<City> cityCollection = database.databaseManager.loadCollection(myDatabase);
-        System.out.println("Коллекция загружена");
-
+            System.out.println("Коллекция загружена");
 
         while (true) {
 
@@ -65,6 +37,9 @@ public class Main {
             }
 
             }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         }
     }
 

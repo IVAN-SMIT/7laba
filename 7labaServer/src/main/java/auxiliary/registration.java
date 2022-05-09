@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 /**
  *мда треш
+ * эта штука по идее должна регистрировать
  */
 
 public class registration {
@@ -23,7 +24,7 @@ public class registration {
                 if (password.equals(rs.getString(2))) {
                     rs.close();
                     st.close();
-                    System.out.println("дошли!");
+                    System.out.println("зарегался!");
                     return "SIGNED";
                 } else {
                     rs.close();
@@ -31,6 +32,7 @@ public class registration {
                     return "WRONG_PASS";
                 }
             } else {
+                //System.out.println(password);
                 st.executeUpdate("INSERT INTO users(username, password) VALUES('" + username + "', '" + password + "')");
                 rs.close();
                 st.close();

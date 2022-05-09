@@ -7,6 +7,7 @@ import java.util.Stack;
 
 /**
  * Сохраняет коллекцию в файл
+ * @deprecated уже не используется, файлы всегда сохраняются!
  */
 
 public class SaveCommand implements Command {
@@ -16,7 +17,7 @@ public class SaveCommand implements Command {
         } else {
            new FileManager().saveCollection(cityCollection, argument);
         }
-        String result = "Коллекция сохранена!";
+        String result = "Коллекция сохранена в файл!";
         System.out.println(result);
         return result;
     }

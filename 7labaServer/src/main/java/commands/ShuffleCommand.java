@@ -2,8 +2,12 @@ package commands;
 
 import City.City;
 import auxiliary.Command;
+import auxiliary.Commander;
+import database.DatabaseManager;
+import database.SQLCommands;
 
-import java.util.Collections;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Stack;
 
 /**
@@ -11,9 +15,10 @@ import java.util.Stack;
  */
 
 public class ShuffleCommand implements Command {
-    public String run(Stack<City> cityCollection) {
-        Collections.shuffle(cityCollection);
-        return "Элементы перемешаны!";
-
+    public Stack<City> run(Stack<City> cityCollection, Connection myDatabase) throws SQLException {
+        cityCollection = new SQLCommands().shuffleDB(myDatabase, cityCollection);
+       // Collections.shuffle(cityCollection);
+        Commander.response =  "Элементы перемешаны!";
+        return cityCollection;
     }
 }
