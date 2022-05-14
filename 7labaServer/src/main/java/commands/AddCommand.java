@@ -61,13 +61,14 @@ public class AddCommand implements Command {
             Human governor = new Human(height);
             governor.setHeight(height);
 
-            cityCollection.insertElementAt(new City(id, name.trim(), coordinates,
-                    localDate.toString(),
-                    area, population, metersAboveSeaLevel,
-                    carCode, climate, standardOfLiving, governor, username), index);
+            try {
 
-            fields[10] = Long.toString(id);
-            fields[11] =username;
+
+                cityCollection.insertElementAt(new City(id, name.trim(), coordinates,
+                        localDate.toString(),
+                        area, population, metersAboveSeaLevel,
+                        carCode, climate, standardOfLiving, governor, username), index);
+            }catch (Exception e){System.out.println(e);}
 
             System.out.println(username +" добавил элемент  " + cityCollection.peek().toString());
 
@@ -76,7 +77,7 @@ public class AddCommand implements Command {
             Commander.response = ("Введены неверные данные! Попробуйте снова. (начните с add)  \n" + e);
         }
 
-        DatabaseManager.saveCollection(cityCollection, database,fields, id, username);
+        DatabaseManager.saveCollection(cityCollection, database, username);
         Commander.response = "Элемент успешно добавлен!";
         return cityCollection;
     }

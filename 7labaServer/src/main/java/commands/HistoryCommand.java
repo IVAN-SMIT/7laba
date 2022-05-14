@@ -1,7 +1,6 @@
 package commands;
 
 import auxiliary.Command;
-import auxiliary.Messager;
 
 import java.util.LinkedList;
 import java.util.Arrays;
@@ -11,12 +10,12 @@ import java.util.Arrays;
  */
 
 public class HistoryCommand implements Command {
-    public String run(String argument, LinkedList<String> history) throws IllegalArgumentException {
-        if (argument != null) {
-            throw new IllegalArgumentException("history не имеет аргументов");
+    public String run(LinkedList<String> history) throws IllegalArgumentException {
+        try {
+            history.removeLast();
+            return "Введенные команды (последние 10):"+Arrays.toString(history.toArray());
+        }catch (Exception e){
+            return e.toString();
         }
-        history.removeLast();
-        return "Введенные команды (последние 10):"+Arrays.toString(history.toArray());
-
     }
 }

@@ -3,7 +3,7 @@ package auxiliary;
 import java.util.Scanner;
 
 public class Corrector {
-    /** Метод для подтверждения, что коллекция введена верно
+     /** Метод для подтверждения, что коллекция введена верно
      * @return возвращает целочисленное значение, необходимое для введения ответа
      */
     public static int getInt() {

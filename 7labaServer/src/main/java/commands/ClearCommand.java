@@ -3,8 +3,6 @@ package commands;
 import City.City;
 import auxiliary.Command;
 import auxiliary.Commander;
-import auxiliary.Messager;
-import database.DatabaseManager;
 import database.SQLCommands;
 
 import java.sql.Connection;

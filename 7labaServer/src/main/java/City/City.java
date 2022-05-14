@@ -1,7 +1,5 @@
 package City;
 
-import auxiliary.Messager;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -43,9 +41,6 @@ public class City {
  );
 */
     public City(){super();}
-    Messager city = new Messager();
-    boolean flag = true;
-
     public City(Long id, String name, Coordinates coordinates,
                 String localDate,
                 int area,
@@ -113,31 +108,31 @@ public class City {
 
     public  void setId(long id) throws Exception {
         if(id <= 0) {
-            city.println("id не может быть меньше 0",flag);
+            System.out.println("id не может быть меньше 0");
             throw new IllegalArgumentException("id не может быть меньше 0");}
         //this.id = (long) random()*1000;\
         this.id = id;
     }
     public void setName(String name) throws Exception {
         if(name == null){
-            city.println("Name не может быть null!",flag);
+            System.out.println("Name не может быть null!");
             throw new IllegalArgumentException("Name не может быть null!");}
         if (name.equals("")){
-            city.println("Name не может быть пустой строкой",flag);
+            System.out.println("Name не может быть пустой строкой");
             throw new IllegalArgumentException("Name не может быть пустой строкой");}
         this.name = name;
     }
 
     public void setCoordinates(Coordinates coordinates) throws Exception {
         if (coordinates == null) {
-            city.println("coordinates не может быть null!",flag);
+            System.out.println("coordinates не может быть null!");
             throw new IllegalArgumentException("coordinates не может быть null!");}
         this.coordinates = coordinates;
     }
 
     public void setCreationDate(String localDate) throws Exception {
         if(localDate == null) {
-            city.println("Дата создания не может быть null",flag);
+            System.out.println("Дата создания не может быть null");
             throw new IllegalArgumentException("Дата создания не может быть null");}
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
         formatter = formatter.withLocale(Locale.CANADA); //на случай если месяцы будут после дней [России не было, пришлось канаду( ]
@@ -146,14 +141,14 @@ public class City {
 
     public  void setArea(int area) throws Exception {
         if(area <= 0) {
-            city.println("area не может быть меньше 0",flag);
+            System.out.println("area не может быть меньше 0");
             throw new IllegalArgumentException("area не может быть меньше 0");}
         this.area = area;
     }
 
     public void setPopulation(Long population) throws Exception {
         if(population == null | population <=0){
-            city.println("population не может быть null или меньше нуля!",flag);
+            System.out.println("population не может быть null или меньше нуля!");
             throw new IllegalArgumentException("population не может быть null или меньше нуля!");
         }
         this.population=population;
@@ -164,27 +159,27 @@ public class City {
     }
     public void setCarCode(long carCode) throws Exception {
         if(carCode > 1000){
-            city.println("Максимальное значение carCode: 1000",flag);
+            System.out.println("Максимальное значение carCode: 1000");
             throw new IllegalArgumentException("Максимальное значение carCode: 1000");}
         if(carCode <= 0){
-            city.println("Значение carCode должно быть больше 0",flag);
+            System.out.println("Значение carCode должно быть больше 0");
             throw new IllegalArgumentException("Значение carCode должно быть больше 0");}
         this.carCode = carCode;
     }
     public void setClimate(Climate climate) throws Exception {
         if (climate == null) {
-            city.println("climate не может быть null!",flag);
+            System.out.println("climate не может быть null!");
             throw new IllegalArgumentException("climate не может быть null!");}
         this.climate = climate;
     }
     public void setStandardOfLiving(StandardOfLiving standardOfLiving) throws Exception {
         if(standardOfLiving == null){
-            city.println("standardOfLiving не может быть null!",flag);
+            System.out.println("standardOfLiving не может быть null!");
             throw new IllegalArgumentException("standardOfLiving не может быть null!");}
         this.standardOfLiving = standardOfLiving;
     }
     public void setGovernor(Human governor) throws Exception {
-        if(governor == null){city.println("null",flag);}
+        if(governor == null){throw new IllegalArgumentException("governor = null!");}
         this.governor = governor;
     }
 

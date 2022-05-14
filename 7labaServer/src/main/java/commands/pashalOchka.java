@@ -24,5 +24,4 @@ public class pashalOchka implements Command {
     }
         return argument;
     }
-
 }

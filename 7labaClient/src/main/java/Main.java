@@ -16,25 +16,7 @@ class Main {
         String username = null;
         String password;
         String passwordFin = null;
-
-        String result = "WRONG_PASS";
-
-
-        try {
-            while (result.equals("WRONG_PASS")) {
-                System.out.println("Username: ");
-                username = n.readLine();
-                System.out.println("Password: ");
-                password = n.readLine();
-                passwordFin = new PasswordChecker().toSHA256(password);
-                assert client != null;
-                System.out.println(username + "\n"+passwordFin);
-                result = client.sendMessage(new Request("registration", username, passwordFin)).gettextResponse();
-                System.out.println("Подключаемся к серверу...");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        String result = "НЕВЕРНЫЙ ПАРОЛЬ";
 
         try {
             client = new connectionManager("localhost", port);
@@ -43,9 +25,27 @@ class Main {
         }
 
         if (connectionManager.client != null) {
-            System.out.println("Соединение установлено");
-            System.out.println("\n\nВведите help чтобы посмотреть доступные команды");
+            System.out.println("Соединение установлено!\nВойдите чтобы продолжить");
+
             CommandChecker checker = new CommandChecker();
+
+            try {
+                while (result.equals("НЕВЕРНЫЙ ПАРОЛЬ")) {
+                    System.out.println("Username: ");
+                    username = n.readLine();
+                    System.out.println("Password: ");
+                    password = n.readLine();
+                    passwordFin = new PasswordChecker().toSHA256(password);
+                    assert client != null;
+                    result = client.sendMessage(new Request("registration", username, passwordFin)).gettextResponse();
+                    //System.out.println("Подключаемся к серверу...");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            System.out.println("\nВведите help чтобы посмотреть доступные команды");
+
             while (true) {
                 String command = n.readLine();
                 checker.check(command);

@@ -16,8 +16,6 @@ public class IdChecker {
     public static String check(Stack<City> cityCollection ) throws Exception {
 
         Iterator<City> iterator = cityCollection.iterator();
-        Messager check = new Messager();
-        boolean flag = true;
         Long array[] = new Long[cityCollection.size()];
 
             while (iterator.hasNext()) {
@@ -26,16 +24,15 @@ public class IdChecker {
                     array[i] = id;
                 }
             }
-         List<Long> idArray = Arrays.asList(array);
 
         for(int i=0; i<cityCollection.size(); i++) {
             for (int j=i+1; j<cityCollection.size(); j++) {
 
              if(Objects.equals(array[i], array[j])) {
 
-                check.println("Найдено повторение id перед позицией " + j+"\n" +
+                System.out.println("Найдено повторение id перед позицией " + j+"\n" +
                         Arrays.toString(array)+"\n"+
-                        "удалить элемент?\n"+ " \"1\"-да, элемент будет удален\n \"2\"-нет, завершить работу программы и исправить неполадки вручную", flag);
+                        "удалить элемент?\n"+ " \"1\"-да, элемент будет удален\n \"2\"-нет, завершить работу программы и исправить неполадки вручную");
 
                 boolean error = true;
 
@@ -48,15 +45,16 @@ public class IdChecker {
                     switch (up) {
                         case 1:
                             new Remove_by_idCommand().run(String.valueOf(array[i]), cityCollection);
+
                             new SaveCommand().run("", cityCollection);
                             error = false;
                             break;
                         case 2: {
-                            check.println("Надеюсь, вы устраните неполадки", true);
+                            System.out.println("Надеюсь, вы устраните неполадки");
                             System.exit(0);
                         }
                         default:
-                            check.println("Ведите либо 1, либо 2!", true);
+                            System.out.println("Ведите либо 1, либо 2!");
                             break;
                     }
                 }

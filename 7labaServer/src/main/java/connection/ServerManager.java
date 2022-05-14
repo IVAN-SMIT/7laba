@@ -9,12 +9,11 @@ import java.util.Iterator;
 
 import City.*;
 import auxiliary.Commander;
-import commands.ExitCommand;
-import commands.SaveCommand;
-import fileManager.FileManager;
-
+import database.DatabaseManager;
 
 import java.util.Stack;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * принимает запросы с клиентов
@@ -24,6 +23,7 @@ public class ServerManager {
     private final ServerSocketChannel channel;
     private final Selector selector;
     private final ByteBuffer buf = ByteBuffer.allocate(256);
+    private final ReentrantLock lock = new ReentrantLock();
 
     public ServerManager(int port) throws IOException {
         this.port = port;
@@ -46,12 +46,12 @@ public class ServerManager {
                     String line = reader.readLine();
 
                     if ("exit".equals(line)) {
-                       new FileManager().saveCollection(cityCollection, null);
+                        DatabaseManager.saveCollection(cityCollection, myDatabase, "authosave");
+                     //  new FileManager().saveCollection(cityCollection, null);
                        System.exit(0);
                        break;
                     } else if ("save".equals(line)) {
-                        new SaveCommand().run(null, cityCollection);
-                       // new FileManager().saveCollection(cityCollection, null);
+                        DatabaseManager.saveCollection(cityCollection, myDatabase, "authosave");
                     }
                 }
 
@@ -61,10 +61,26 @@ public class ServerManager {
                     while (iter.hasNext()) {
                         SelectionKey key = iter.next();
 
-                        if (key.isAcceptable())
-                            handleAccept(key);
-                        if (key.isReadable())
-                            cityCollection = handleRead(key, cityCollection, myDatabase);
+                        if (key.isAcceptable()) {
+                            Runnable job = () -> {
+                                try {
+                                    handleAccept(key);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            };
+                            ExecutorService service = Executors.newFixedThreadPool(5);
+                            service.execute(job);
+
+                        }
+                        if (key.isReadable()) {
+                            lock.lock();
+                            try {
+                                cityCollection = handleRead(key, cityCollection, myDatabase);
+                            } finally {
+                                lock.unlock();
+                            }
+                        }
 
                         iter.remove();
                     }
@@ -78,12 +94,13 @@ public class ServerManager {
     private void handleAccept(SelectionKey key) throws IOException {
         SocketChannel sc = ((ServerSocketChannel) key.channel()).accept();
 
-        String address = (new StringBuilder(sc.socket().getInetAddress().toString())).append(":").append(sc.socket().getPort()).toString();
+        if (sc != null) {
+            String address = (new StringBuilder(sc.socket().getInetAddress().toString())).append(":").append(sc.socket().getPort()).toString();
 
-        sc.configureBlocking(false);
-        sc.register(selector, SelectionKey.OP_READ, address);
-
-        System.out.printf("Установлено соединение с пользователем: %s\n", address);
+            sc.configureBlocking(false);
+            sc.register(selector, SelectionKey.OP_READ, address);
+            System.out.printf("Установлено соединение с пользователем: %s\n", address);
+        }
     }
 
     public Stack<City> handleRead(SelectionKey key, Stack<City> cityCollection, Connection myDatabase) throws IOException {

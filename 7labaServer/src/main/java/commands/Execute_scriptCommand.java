@@ -40,7 +40,7 @@ public class Execute_scriptCommand implements Command {
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("Файл не найден! Возможно, вы забыли добавить .txt");
+            return "Файл не найден! Возможно, вы забыли добавить .txt";
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -38,28 +38,44 @@ public class ConnectToDB {
             System.out.println("Соединение с БД выполнено успешно");
         } else {
             System.out.println("Ошибка при подключении к БД");
+
         }
 
-
-            /*
-            System.out.println("создаем бд...");
+        try{
+            assert myDatabase != null;
             stmt = myDatabase.createStatement();
             String sql = "CREATE DATABASE cityCollection";
             stmt.executeUpdate(sql);
-            System.out.println("Database успешно создана...");
-            */
+            System.out.println("Database успешно создана");
+        } catch (Exception e){
+            if (e.getMessage().contains("уже существует"))
+                System.out.println("Найдена база данных ");
+            else {
+                System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            }
+        }
 
+        try {
+            new SQLCommands().createNewTable(myDatabase);
+            System.out.println("Таблица с коллекцией не найдена, создаем новую");
+        }catch (Exception e){
+            if (e.getMessage().contains("уже существует"))
+                System.out.println("Найдена таблица с коллекцией");
+            else {
+                System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            }
+        }
+        try {
+            new SQLCommands().createUsers(myDatabase);
+            System.out.println("Таблица users не найдена, создаем новую");
+        }catch (Exception e) {
+            if (e.getMessage().contains("уже существует"))
+                System.out.println("Найдена таблица users ");
+            else {
+                System.out.println(e.getClass().getName() + ": " + e.getMessage());
+            }
+        }
 
-/*
-        stmt = myDatabase.createStatement();
-
-
-        String sql = "INSERT INTO cityCollection(id, name, coordinates,localDate, area, population, metersAboveSeaLevel,\n" +
-                "                                                         carCode, climate, standardOfLiving, governor, username)\n" +
-                "                                     VALUES(56,12,'6 0','2022-04-22T21:25:30.184',324,23,23,23,'OCEANIC','HIGH',1.0, 'op')";
-        stmt.executeUpdate(sql);
-
-*/
         return myDatabase;
     }
 

@@ -11,6 +11,10 @@ import java.io.*;
 
 import java.util.Stack;
 
+/**
+ * Управляет записью и чтением коллекции из файла
+ * @deprecated не актуально, у нас ж теперь все в sql таблице лежит
+ */
 
 public class FileManager {
     private static String fileName;
@@ -18,10 +22,7 @@ public class FileManager {
 
     private static ObjectMapper mapper = new ObjectMapper();
 
-    /**
-     * Управляет записью и чтением коллекции из файла
-     * @param fileName имя файла
-     */
+
 
     public  String read(String fileName) {
         if (fileName == null){fileName = "cityCollection";}
@@ -46,6 +47,7 @@ public class FileManager {
      *  Загружает коллекции с файла
      * @param fname имя файла
      * @return cityCollection
+     * @deprecated не актуально, у нас ж теперь все в sql таблице лежит
      */
 
     public Stack<City> loadCollection(String fname) throws JsonProcessingException, FileNotFoundException {
@@ -65,7 +67,6 @@ public class FileManager {
         }
 
         String jsonCity = new FileManager().read(fileName);
-
         Stack<City> cityCollection = new Stack<>();
         mapper.registerModule(new JSR310Module());
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
@@ -84,9 +85,9 @@ public class FileManager {
 
     /**
      * метод для сохранений коллекций
-     *
      * @param cityCollection коллекция
      * @param pathToSave путь сохранения
+     * @deprecated не актуально, у нас ж теперь все в sql таблице лежит
      */
 
     public void saveCollection(Stack<City> cityCollection, String pathToSave){

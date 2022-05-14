@@ -3,7 +3,6 @@ import auxiliary.IdChecker;
 import connection.ServerManager;
 import database.ConnectToDB;
 import database.DatabaseManager;
-
 import java.sql.Connection;
 import java.util.Stack;
 
@@ -13,17 +12,12 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        if (args.length != 1) {
-            System.out.println("Пожалуйста, запускайте только с именем файла коллекции!");
-        }
         Connection myDatabase = null;
-
-
         try {
             myDatabase = new ConnectToDB().connect(myDatabase);
             Stack<City> cityCollection = DatabaseManager.loadCollection(myDatabase);
 
-            System.out.println("Коллекция загружена");
+            System.out.println("Коллекция загружена из базы данных");
 
         while (true) {
 
@@ -33,6 +27,7 @@ public class Main {
                 ServerManager server = new ServerManager(9890);
                 server.starting(cityCollection, myDatabase);
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println(e +"\n =======================");break;
             }
 

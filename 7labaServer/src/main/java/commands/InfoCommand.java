@@ -2,7 +2,6 @@ package commands;
 
 import City.City;
 import auxiliary.Command;
-import auxiliary.Messager;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -16,13 +15,8 @@ import java.util.TimeZone;
 
 public class InfoCommand implements Command {
 
-    public String run(String argument, Stack<City> stackInfo) throws Exception {
-        if (argument != null) {
-            throw new IllegalArgumentException("Info не имеет аргументов!");
-        }
-
+    public String run(Stack<City> stackInfo) throws Exception {
         try {
-
             Calendar c = null;
             File file = new File("cityCollection");
             SimpleDateFormat format = null;
@@ -39,11 +33,10 @@ public class InfoCommand implements Command {
                     format.format(c.getTime()) + "\nКоличество элементов: " + stackInfo.size();
 
         } catch (Exception e) {
-            new Messager().println("Произошла ошибка!", true);
+            System.out.println("Произошла ошибка!");
             }
         return "В коллекции отсутствуют элементы";
     }
-    
     }
     
 

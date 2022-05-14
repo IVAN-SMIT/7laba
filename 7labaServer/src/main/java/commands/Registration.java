@@ -1,4 +1,4 @@
-package auxiliary;
+package commands;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,11 +10,8 @@ import java.sql.SQLException;
  * эта штука по идее должна регистрировать
  */
 
-public class registration {
-    public static String run(String argument, String username, String password, Connection database){
-        if (argument != null) {
-            throw new IllegalArgumentException("registration не имеет аргументов!");
-        }
+public class Registration {
+    public static String run( String username, String password, Connection database){
 
         try {
             Statement st = database.createStatement();
@@ -24,23 +21,23 @@ public class registration {
                 if (password.equals(rs.getString(2))) {
                     rs.close();
                     st.close();
-                    System.out.println("зарегался!");
-                    return "SIGNED";
+                    //System.out.println("вход успешен!");
+                    return "ВХОД ВЫПОЛНЕН";
                 } else {
                     rs.close();
                     st.close();
-                    return "WRONG_PASS";
+                    return "НЕВЕРНЫЙ ПАРОЛЬ";
                 }
             } else {
-                //System.out.println(password);
+                System.out.println("добавлен новый пользователь: "+ username);
                 st.executeUpdate("INSERT INTO users(username, password) VALUES('" + username + "', '" + password + "')");
                 rs.close();
                 st.close();
-                return "REGISTERED";
+                return "РЕГИСТРАЦИЯ ПРОИЗОШЛА УСПЕШНО";
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "ERROR";
+        return "ОШИБКА";
     }
 }

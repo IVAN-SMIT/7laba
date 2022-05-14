@@ -9,6 +9,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 
+/**
+ *
+ */
+
 public class DatabaseManager {
     public static String date;
 
@@ -19,8 +23,6 @@ public class DatabaseManager {
         try {
             Statement statement = db.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM cityCollection");
-           // System.out.println("resultSet = ");
-           // System.out.println(resultSet);
 
             while (resultSet.next()) {
                 try {
@@ -45,6 +47,7 @@ public class DatabaseManager {
                             area, population, metersAboveSeaLevel,
                             carCode, climate, standardOfLiving, governor, username));
                 } catch (IllegalArgumentException e) {
+                    System.out.println(e);
                     System.out.println("Поврежденный файл! Некоторые элементы типа City имеют неправильные значения, поэтому они были пропущены");
                 }
             }
@@ -56,13 +59,26 @@ public class DatabaseManager {
         return cityCollection;
     }
 
-    public static void saveCollection(Stack<City> cityCollection, Connection database, String[] fields, long id, String username) {
-        Iterator iterator = cityCollection.iterator();
+    public static void saveCollection(Stack<City> cityCollection, Connection database, String username) {
+        Iterator<City> iterator = cityCollection.iterator();
 
         try {
             Statement st = database.createStatement();
-            //st.executeUpdate("TRUNCATE cityCollection");
-           // while (iterator.hasNext()) {
+            st.executeUpdate("TRUNCATE cityCollection");
+            while (iterator.hasNext()) {
+                City element = iterator.next();
+                Long id = element.getId();
+                String name = element.getName();
+                Coordinates coordinates = element.getCoordinates();
+                String localDate = element.getLocalDate();
+                long area = element.getArea();
+                long population = element.getPopulation();
+                long metersAboveSeaLevel = element.getMetersAboveSeaLevel();
+                long carCode = element.getCarCode();
+                Climate climate = element.getClimate();
+                StandardOfLiving standardOfLiving = element.getStandardOfLiving();
+                Human governor = element.getGovernor();
+
                 //String[] fields = iterator.next().toString().split(" ");
 
                 try {
@@ -70,17 +86,17 @@ public class DatabaseManager {
                             "INSERT INTO cityCollection(id, name, coordinates,localDate," +
                                     "                    area, population, metersAboveSeaLevel,\n" +
                                     "                      carCode, climate, standardOfLiving, governor, username)" +
-                                    " VALUES("+id+", '"  + fields[0] +
-                                    "', '" + fields[1] + "', '" + fields[2] +
-                                    "', '" + fields[3] + "', '" + fields[4] +
-                                    "', '" + fields[5] + "', '" + fields[6] +
-                                    "', '" + fields[7] + "', '" + fields[8] +
-                                    "', '" + fields[9] + "', '" + username + "')");
+                                    " VALUES("+id+", '"  + name +
+                                    "', '" + coordinates + "', '" + localDate +
+                                    "', '" + area + "', '" + population +
+                                    "', '" + metersAboveSeaLevel + "', '" + carCode +
+                                    "', '" + climate + "', '" + standardOfLiving +
+                                    "', '" + governor + "', '" + username + "')");
 
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-          //  }
+            }
             st.close();
         } catch (Exception e) {
             e.printStackTrace();

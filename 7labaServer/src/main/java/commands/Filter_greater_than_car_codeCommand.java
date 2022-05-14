@@ -2,7 +2,6 @@ package commands;
 
 import City.City;
 import auxiliary.Command;
-
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class Filter_greater_than_car_codeCommand implements Command {
     public String run(String argument, Stack<City> cityCollection) throws Exception {
-            Long carCode;
+            long carCode;
             try {
                 carCode = Long.parseLong(argument);
             } catch (Exception e) {

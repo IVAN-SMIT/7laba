@@ -137,3 +137,6 @@ public class SQLCommands {
         return cityCollection;
     }
 }
+
+
+   // SELECT * FROM users INNER JOIN cityCollection on users . username =  cityCollection . username // объединить  cityCollection и username
