@@ -44,7 +44,8 @@ public class IdChecker {
                     int up = Corrector.getInt();
                     switch (up) {
                         case 1:
-                            new Remove_by_idCommand().run(String.valueOf(array[i]), cityCollection);
+                            String username ="i1";
+                            new Remove_by_idCommand().run(String.valueOf(array[i]), cityCollection, username);
 
                             new SaveCommand().run("", cityCollection);
                             error = false;

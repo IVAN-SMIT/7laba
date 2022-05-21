@@ -61,7 +61,7 @@ public class Commander {
         System.out.println("Пользователь: "+username +"\n Распознана команда: "+command+"\n argument команды: " + argument+  "\n");
         switch (command) {
             case "registration": response = registr;break;
-            case"help": response = new HelpCommand().run();break;
+            case "help": response = new HelpCommand().run();break;
             case "exit":  new SaveCommand().run();break;
             case "info":response = new InfoCommand().run(cityCollection);break;
             case "3137best": pashalOchka.run(argument);break;// интересно, а что же это......
@@ -69,11 +69,11 @@ public class Commander {
             case "show": response = new ShowCommand().run(argument, cityCollection);break;
             case "clear": cityCollection = new  ClearCommand().run(argument, myDatabase, cityCollection);break;
             case "add":  cityCollection = new AddCommand().run(argument, cityCollection, username, myDatabase);break;
-            case "remove_by_id":response =  new Remove_by_idCommand().run(argument, cityCollection);break;
+            case "remove_by_id":response =  new Remove_by_idCommand().run(argument, cityCollection, username);break;
             case "remove_last": response = new Remove_lastCommand().run(cityCollection, myDatabase, username);break;
             case "update": {response =  new UpdateCommand().run(argument, cityCollection, username, myDatabase);break;}
             case "execute_script" : response = new Execute_scriptCommand().run(argument,cityCollection, username, password, myDatabase);break;
-            case "remove_any_by_climate" :response= new Remove_any_by_climateCommand().run(argument, cityCollection);break;
+            case "remove_any_by_climate" :response= new Remove_any_by_climateCommand().run(argument, cityCollection, username);break;
             case "filter_greater_than_car_code" :response =  new Filter_greater_than_car_codeCommand().run(argument, cityCollection);break;
             case "insert_at_help" :{response= "Введите значение индкса.Максимально возможное значение: " + (cityCollection.size()+1);break;}
             case "shuffle" : cityCollection = new ShuffleCommand().run(cityCollection, myDatabase, username);break;

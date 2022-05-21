@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  */
 
 public class Remove_any_by_climateCommand implements Command {
-    public  String run(String argument,Stack<City> cityCollection ) throws Exception {
+    public  String run(String argument,Stack<City> cityCollection, String username ) throws Exception {
 
         Climate climate;
         try{
@@ -21,13 +21,13 @@ public class Remove_any_by_climateCommand implements Command {
             return "Введены неверные данные! Попробуйте снова. (начните с remove_any_by_climate)";
         }
         try {
-            Stack<City> climateCollectoin = cityCollection.stream().filter((p) -> p.getClimate().equals(Climate.getEnumByName(argument))).collect(Collectors.toCollection(Stack::new));
-            cityCollection.removeAll(climateCollectoin);
-            if(climateCollectoin.size() == 0){
-                return  "Элементы со значением " + climate + " отсутсвуют!";
-            } else {
-                return  "\nУдалено элементов: " + climateCollectoin.size() +"\nСо значением поля Climate: " + climate;
-            }
+                Stack<City> climateCollectoin = cityCollection.stream().filter((p) -> p.getClimate().equals(Climate.getEnumByName(argument))).filter((p) -> p.getUsername().equals(username)).collect(Collectors.toCollection(Stack::new));
+                cityCollection.removeAll(climateCollectoin);
+                if (climateCollectoin.size() == 0) {
+                    return "Элементы со значением " + climate +", созданные пользователем "+ username+ " отсутсвуют!";
+                } else {
+                    return "\nУдалено элементов: " + climateCollectoin.size() + "\nСо значением поля Climate: " + climate;
+                }
         }catch (Exception e){
             return "Произошла ошибка!";
         }

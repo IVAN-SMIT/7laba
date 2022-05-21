@@ -10,12 +10,17 @@ import java.sql.Statement;
 import java.sql.SQLException;
 
 /**
- *
+ *Класс, выполняющий обязанности работы с sql таблицами
  */
 
 public class DatabaseManager {
     public static String date;
 
+    /**
+     * Метод загружает данные с базы данных и добавляет это все в коллекцию
+     * @param db - база данных моя
+     * @return возвращает коллекцию
+     */
     public static Stack<City> loadCollection(Connection db) {
         date = java.time.LocalDateTime.now().toString();
         Stack<City> cityCollection = new Stack<>();
@@ -54,11 +59,17 @@ public class DatabaseManager {
             resultSet.close();
             statement.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getClass().getName() + "\n" + e);
         }
         return cityCollection;
     }
 
+    /**
+     *  Загружает всё с коллекции в sql таблицу
+     * @param cityCollection - коллекция
+     * @param database - база данных
+     * @param username - имя пользователя который сейчас работает
+     */
     public static void saveCollection(Stack<City> cityCollection, Connection database, String username) {
         Iterator<City> iterator = cityCollection.iterator();
 
@@ -80,7 +91,6 @@ public class DatabaseManager {
                 Human governor = element.getGovernor();
 
                 //String[] fields = iterator.next().toString().split(" ");
-
                 try {
                     st.executeUpdate(
                             "INSERT INTO cityCollection(id, name, coordinates,localDate," +
@@ -94,18 +104,22 @@ public class DatabaseManager {
                                     "', '" + governor + "', '" + username + "')");
 
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getClass().getName() + "\n" + e);
+
                 }
             }
             st.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getClass().getName() + "\n" + e);
+
         }
 
     }
 
 }
 /*
+потеряю ещё
+
 CREATE TABLE cityCollection (
    id serial PRIMARY KEY,
    name VARCHAR (50) NOT NULL,

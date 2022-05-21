@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
  */
 
 public class Remove_by_idCommand implements Command {
-    public String run(String argument, Stack<City> cityCollection) throws Exception {
+    public String run(String argument, Stack<City> cityCollection, String username) throws Exception {
 
         try {
             Long numId = Long.valueOf(argument);
-            Stack<City> res = cityCollection.stream().filter((p) -> p.getId().equals(numId)).collect(Collectors.toCollection(Stack::new));
+            Stack<City> res = cityCollection.stream().filter((p) -> p.getId().equals(numId)).filter((p) -> p.getUsername().equals(username) | p.getUsername().equals("i1")).collect(Collectors.toCollection(Stack::new));
             cityCollection.removeAll(res);
             if (res.size() == 0){
                 return "Элемент cо значением id:" + numId + " не найден!";

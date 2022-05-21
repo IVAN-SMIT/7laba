@@ -27,13 +27,12 @@ public class Main {
                 ServerManager server = new ServerManager(9890);
                 server.starting(cityCollection, myDatabase);
             }catch (Exception e){
-                e.printStackTrace();
                 System.out.println(e +"\n =======================");break;
             }
 
             }
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println(e.getClass().getName() + e);
         }
         }
     }

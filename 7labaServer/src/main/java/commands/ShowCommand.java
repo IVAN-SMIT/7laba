@@ -15,10 +15,12 @@ public class ShowCommand implements Command {
         if (argument != null) {return("Show не имеет аргументов!"); }
 
     try {
-        Iterator<City> iterator = cityCollection.iterator();
+
         if (cityCollection.size() == 0 | cityCollection == null) {
             return "В коллекции отсутствуют элементы!\n";
         }
+
+        Iterator<City> iterator = cityCollection.iterator();
 
         String result ="";
 
@@ -28,7 +30,7 @@ public class ShowCommand implements Command {
             return result;
 
          }catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.getClass().getName() + e);
              System.out.println("Ошибка!");
         }
         return argument;

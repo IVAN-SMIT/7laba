@@ -38,7 +38,7 @@ class Main {
                     passwordFin = new PasswordChecker().toSHA256(password);
                     assert client != null;
                     result = client.sendMessage(new Request("registration", username, passwordFin)).gettextResponse();
-                    //System.out.println("Подключаемся к серверу...");
+
                 }
             }catch (Exception e){
                 e.printStackTrace();

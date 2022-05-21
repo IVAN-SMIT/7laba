@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Класс для подключения к бд
+ */
+
 public class ConnectToDB {
 
 
@@ -16,7 +20,7 @@ public class ConnectToDB {
 
     static String USER = "postgres";
     static String PASS = "111";
-    static String DB_URL ="jdbc:postgresql://localhost:5432/cityCollection";
+    static String DB_URL ="jdbc:postgresql://localhost:5432/studs";
     static String driverClassName = "org.postgresql.Driver";
 
     public Connection connect(Connection myDatabase) throws Exception {

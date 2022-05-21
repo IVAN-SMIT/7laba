@@ -18,14 +18,15 @@ public class Insert_atCommand implements Command {
     public Stack<City> run(String argument, Stack<City> cityCollection, Connection database, String username) throws Exception {
         int index;
 
-        String[] fields =argument.split(", ");
-
-        index = Integer.parseInt(fields[0]) - 1;
-
-        if (index > cityCollection.size() | index <= 0){
-            Commander.response = ("А ничего, что в коллекции всего " + cityCollection.size() +" элементов???" +
-                    "\n Начинай заново с 'insert_at'");}
         try {
+
+            String[] fields = argument.split(", ");
+
+            index = Integer.parseInt(fields[0]) - 1;
+            if (index > cityCollection.size() | index <= 0){
+                Commander.response = ("А ничего, что в коллекции всего " + cityCollection.size() +" элементов???" +
+                        "\n Начинай заново с 'insert_at'");}
+
             UUID myId = UUID.randomUUID();
             long id = (long) Math.floor(Math.abs(myId.hashCode()/100000));
 
