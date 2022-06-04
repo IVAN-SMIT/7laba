@@ -2,12 +2,10 @@ package database;
 
 
 import City.*;
+
+import java.sql.*;
 import java.util.*;
 import java.time.LocalDateTime;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.SQLException;
 
 /**
  *Класс, выполняющий обязанности работы с sql таблицами
@@ -63,7 +61,6 @@ public class DatabaseManager {
         }
         return cityCollection;
     }
-
     /**
      *  Загружает всё с коллекции в sql таблицу
      * @param cityCollection - коллекция
@@ -71,9 +68,10 @@ public class DatabaseManager {
      * @param username - имя пользователя который сейчас работает
      */
     public static void saveCollection(Stack<City> cityCollection, Connection database, String username) {
-        Iterator<City> iterator = cityCollection.iterator();
+
 
         try {
+            Iterator<City> iterator = cityCollection.iterator();
             Statement st = database.createStatement();
             st.executeUpdate("TRUNCATE cityCollection");
             while (iterator.hasNext()) {
@@ -92,33 +90,42 @@ public class DatabaseManager {
 
                 //String[] fields = iterator.next().toString().split(" ");
                 try {
-                    st.executeUpdate(
-                            "INSERT INTO cityCollection(id, name, coordinates,localDate," +
-                                    "                    area, population, metersAboveSeaLevel,\n" +
+                    PreparedStatement prst = database.prepareStatement("INSERT INTO cityCollection(id, name, coordinates,localDate," +
+                            "                    area, population, metersAboveSeaLevel," +
                                     "                      carCode, climate, standardOfLiving, governor, username)" +
-                                    " VALUES("+id+", '"  + name +
-                                    "', '" + coordinates + "', '" + localDate +
-                                    "', '" + area + "', '" + population +
-                                    "', '" + metersAboveSeaLevel + "', '" + carCode +
-                                    "', '" + climate + "', '" + standardOfLiving +
-                                    "', '" + governor + "', '" + username + "')");
-
+                                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+                    prst.setInt(1, Math.toIntExact(id));
+                    prst.setString(2,name);
+                    prst.setString(3, String.valueOf(coordinates));
+                    prst.setString(4,localDate);
+                    prst.setString(5, String.valueOf(area));
+                    prst.setString(6, String.valueOf(population));
+                    prst.setString(7, String.valueOf(metersAboveSeaLevel));
+                    prst.setString(8, String.valueOf(carCode));
+                    prst.setString(9, String.valueOf(climate));
+                    prst.setString(10, String.valueOf(standardOfLiving));
+                    prst.setString(11, String.valueOf(governor));
+                    prst.setString(12,username);
+                    prst.executeUpdate();
+                    prst.close();
                 } catch (SQLException e) {
                     System.out.println(e.getClass().getName() + "\n" + e);
-
                 }
             }
             st.close();
         } catch (Exception e) {
             System.out.println(e.getClass().getName() + "\n" + e);
-
         }
-
     }
-
 }
+
+
+
+
+
+
 /*
-потеряю ещё
+потеряю ещё вдруг
 
 CREATE TABLE cityCollection (
    id serial PRIMARY KEY,

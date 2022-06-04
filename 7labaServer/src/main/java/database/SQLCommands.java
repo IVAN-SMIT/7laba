@@ -69,6 +69,7 @@ public class SQLCommands {
     public Connection createUsers(Connection myDatabase) throws SQLException{
         stmt = myDatabase.createStatement();
         String sql = "CREATE TABLE users(\n" +
+                "\t id VARCHAR (50)NOT NULL,\n" +
                 "\tusername VARCHAR (50)NOT NULL,\n" +
                 "\tpassword VARCHAR (250)NOT NULL\n" +
                 "\t);";

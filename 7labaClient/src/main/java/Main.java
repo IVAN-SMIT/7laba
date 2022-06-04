@@ -13,10 +13,6 @@ class Main {
 
         BufferedReader n = new BufferedReader(new InputStreamReader(System.in));
         connectionManager client = null;
-        String username = null;
-        String password;
-        String passwordFin = null;
-        String result = "НЕВЕРНЫЙ ПАРОЛЬ";
 
         try {
             client = new connectionManager("localhost", port);
@@ -25,24 +21,14 @@ class Main {
         }
 
         if (connectionManager.client != null) {
-            System.out.println("Соединение установлено!\nВойдите чтобы продолжить");
+            System.out.println("Соединение установлено!\nВойдите или зарегистрируйтесь чтобы продолжить");
+
+            Authorization.authorization(client);
+
+            String username = new Authorization().getUsername();
+            String passwordFin = new Authorization().getPassword();
 
             CommandChecker checker = new CommandChecker();
-
-            try {
-                while (result.equals("НЕВЕРНЫЙ ПАРОЛЬ")) {
-                    System.out.println("Username: ");
-                    username = n.readLine();
-                    System.out.println("Password: ");
-                    password = n.readLine();
-                    passwordFin = new PasswordChecker().toSHA256(password);
-                    assert client != null;
-                    result = client.sendMessage(new Request("registration", username, passwordFin)).gettextResponse();
-
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
 
             System.out.println("\nВведите help чтобы посмотреть доступные команды");
 

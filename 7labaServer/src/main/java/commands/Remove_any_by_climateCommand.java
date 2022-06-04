@@ -24,7 +24,7 @@ public class Remove_any_by_climateCommand implements Command {
                 Stack<City> climateCollectoin = cityCollection.stream().filter((p) -> p.getClimate().equals(Climate.getEnumByName(argument))).filter((p) -> p.getUsername().equals(username)).collect(Collectors.toCollection(Stack::new));
                 cityCollection.removeAll(climateCollectoin);
                 if (climateCollectoin.size() == 0) {
-                    return "Элементы со значением " + climate +", созданные пользователем "+ username+ " отсутсвуют!";
+                    return "Элементы со значением " + climate +", созданные пользователем "+ username+ " отсутсвуют или к ним нет доступа";
                 } else {
                     return "\nУдалено элементов: " + climateCollectoin.size() + "\nСо значением поля Climate: " + climate;
                 }

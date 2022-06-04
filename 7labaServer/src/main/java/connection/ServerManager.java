@@ -60,7 +60,7 @@ public class ServerManager {
 
                     while (iter.hasNext()) {
                         SelectionKey key = iter.next();
-
+                        
                         if (key.isAcceptable()) {
                             Runnable job = () -> {
                                 try {
@@ -140,7 +140,6 @@ public class ServerManager {
                 if (obj instanceof Request) {
                     Request req = (Request) obj;
                     Commander.command = req.getCommand();
-
                     cityCollection = new Commander().readCommand(cityCollection, req.getUsername(), req.getPassword(), myDatabase);;
                     //Commander.readCommand(cityCollection);
                     response = new Response(new Commander().response);

@@ -3,9 +3,11 @@ package auxillary;
 import java.util.Scanner;
 
 public class Corrector {
+
     /** Метод для подтверждения, что коллекция введена верно
      * @return возвращает целочисленное значение, необходимое для введения ответа
      */
+
     public  int getInt() {
         int validNumberEntered = 0;
         Scanner scan = new Scanner(System.in);

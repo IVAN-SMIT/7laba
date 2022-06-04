@@ -4,17 +4,11 @@ import City.*;
 import auxiliary.*;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.Stack;
 import java.util.UUID;
-import java.util.PriorityQueue;
-import java.util.Iterator;
-import java.sql.Connection;
 import database.*;
-import java.sql.Statement;
-import java.sql.SQLException;
+
 
 /**
  * Добавляет новый элемент в базу данных
@@ -62,8 +56,6 @@ public class AddCommand implements Command {
             governor.setHeight(height);
 
             try {
-
-
                 cityCollection.insertElementAt(new City(id, name.trim(), coordinates,
                         localDate.toString(),
                         area, population, metersAboveSeaLevel,

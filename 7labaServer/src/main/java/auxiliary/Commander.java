@@ -2,13 +2,13 @@ package auxiliary;
 
 import City.City;
 import commands.*;
+import org.postgresql.util.PSQLException;
 
 
 import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Stack;
-
 
 
 /**
@@ -45,43 +45,41 @@ public class Commander {
         if (history.size() == 11) {
             history.remove();
         }
-        if (!Objects.equals(command, "insert_at_help")){
+        if (!Objects.equals(command, "insert_at_help")|!Objects.equals(command, "enter" )|!Objects.equals(command, "registration" )){
             history.add(command);
         }
 
-        String registr = Registration.run(username, password, myDatabase);
+        try {
+        if(!myDatabase.isClosed()){
+            System.out.println("Пользователь: "+username +"\n Распознана команда: "+command+"\n argument команды: " + argument+  "\n");
+            switch (command) {
+                case "enter": response =Registration.asEnter(username, password, myDatabase);break;
+                case "registration": response = Registration.reg(username, password, myDatabase);;break;
+                case "help": response = new HelpCommand().run();break;
+                case "exit":  new SaveCommand().run();break;
+                case "info":response = new InfoCommand().run(cityCollection);break;
+                case "3137best": pashalOchka.run(argument);break;// интересно, а что же это......
+                case "history": response = new HistoryCommand().run(history);break;
+                case "show": response = new ShowCommand().run(argument, cityCollection);break;
+                case "clear": cityCollection = new  ClearCommand().run(argument, myDatabase, cityCollection);break;
+                case "add":  cityCollection = new AddCommand().run(argument, cityCollection, username, myDatabase);break;
+                case "remove_by_id":response =  new Remove_by_idCommand().run(argument, cityCollection, username);break;
+                case "remove_last": response = new Remove_lastCommand().run(cityCollection, myDatabase, username);break;
+                case "update": {response =  new UpdateCommand().run(argument, cityCollection, username, myDatabase);break;}
+                case "execute_script" : response = new Execute_scriptCommand().run(argument,cityCollection, username, password, myDatabase);break;
+                case "remove_any_by_climate" :response= new Remove_any_by_climateCommand().run(argument, cityCollection, username);break;
+                case "filter_greater_than_car_code" :response =  new Filter_greater_than_car_codeCommand().run(argument, cityCollection);break;
+                case "insert_at_help" :{response= "Введите значение индкса.Максимально возможное значение: " + (cityCollection.size()+1);break;}
+                case "shuffle" : cityCollection = new ShuffleCommand().run(cityCollection, myDatabase, username);break;
+                case "insert_at" : cityCollection = new Insert_atCommand().run(argument, cityCollection, myDatabase, username);break;
+                default: response ="Неопознанная команда. Введите 'help' для просмотра доступных команд";
+            }
+        }else {response = "Соединение с бд уже было закрыто каким-то хером";}
 
-        if (registr.equals("НЕВЕРНЫЙ ПАРОЛЬ")) {
-            System.out.println("Статус входа: "+registr);
-            response = "НЕВЕРНЫЙ ПАРОЛЬ";
-            return null;
-        }
-
-
-        System.out.println("Пользователь: "+username +"\n Распознана команда: "+command+"\n argument команды: " + argument+  "\n");
-        switch (command) {
-            case "registration": response = registr;break;
-            case "help": response = new HelpCommand().run();break;
-            case "exit":  new SaveCommand().run();break;
-            case "info":response = new InfoCommand().run(cityCollection);break;
-            case "3137best": pashalOchka.run(argument);break;// интересно, а что же это......
-            case "history": response = new HistoryCommand().run(history);break;
-            case "show": response = new ShowCommand().run(argument, cityCollection);break;
-            case "clear": cityCollection = new  ClearCommand().run(argument, myDatabase, cityCollection);break;
-            case "add":  cityCollection = new AddCommand().run(argument, cityCollection, username, myDatabase);break;
-            case "remove_by_id":response =  new Remove_by_idCommand().run(argument, cityCollection, username);break;
-            case "remove_last": response = new Remove_lastCommand().run(cityCollection, myDatabase, username);break;
-            case "update": {response =  new UpdateCommand().run(argument, cityCollection, username, myDatabase);break;}
-            case "execute_script" : response = new Execute_scriptCommand().run(argument,cityCollection, username, password, myDatabase);break;
-            case "remove_any_by_climate" :response= new Remove_any_by_climateCommand().run(argument, cityCollection, username);break;
-            case "filter_greater_than_car_code" :response =  new Filter_greater_than_car_codeCommand().run(argument, cityCollection);break;
-            case "insert_at_help" :{response= "Введите значение индкса.Максимально возможное значение: " + (cityCollection.size()+1);break;}
-            case "shuffle" : cityCollection = new ShuffleCommand().run(cityCollection, myDatabase, username);break;
-           case "insert_at" : cityCollection = new Insert_atCommand().run(argument, cityCollection, myDatabase, username);break;
-            default: response ="Неопознанная команда. Введите 'help' для просмотра доступных команд";
-        }
+        }catch (PSQLException e){
+        response = "Выполнение команд невозможно по причине потери связи с базой данных";
+    }
         return cityCollection;
-
     }
 }
 

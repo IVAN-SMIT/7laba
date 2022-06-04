@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Stack;
 import java.util.TimeZone;
 
+import static database.DatabaseManager.date;
+
 /**
  * Показывает тип коллекции, дату ее создания и количество элементов в ней
  */
@@ -24,13 +26,14 @@ public class InfoCommand implements Command {
                 Long lastModified = file.lastModified();
                 format = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
                 c = Calendar.getInstance();
-                c.setTimeInMillis(lastModified);
+                c.setTimeInMillis(Long.parseLong(date));
                 c.setTimeZone(TimeZone.getDefault());
                 format.format(c.getTime());
             }
 
+
             return"Тип коллекции: " + stackInfo.getClass().getSimpleName() + " \nДата создания: " +
-                    format.format(c.getTime()) + "\nКоличество элементов: " + stackInfo.size();
+                    date + "\nКоличество элементов: " + stackInfo.size();
 
         } catch (Exception e) {
             System.out.println("Произошла ошибка!");

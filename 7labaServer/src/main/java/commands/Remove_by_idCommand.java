@@ -18,7 +18,7 @@ public class Remove_by_idCommand implements Command {
             Stack<City> res = cityCollection.stream().filter((p) -> p.getId().equals(numId)).filter((p) -> p.getUsername().equals(username) | p.getUsername().equals("i1")).collect(Collectors.toCollection(Stack::new));
             cityCollection.removeAll(res);
             if (res.size() == 0){
-                return "Элемент cо значением id:" + numId + " не найден!";
+                return "Элемент cо значением id:" + numId + " не найден или к нему нет доступа";
             } else {
                 return "Элемент:\n" + res + "\nCо значением id:" + numId + " был удалён.";
             }
